@@ -1,0 +1,16 @@
+{% extends "blog_detail.html" %}
+{% block comment % }
+  
+{% for comment in comments %}
+<div class="media">
+    <a class="media-left" href="#">
+        <img src="{{ comments.user.profile.avatar.url }}" alt="" class="rounded-circle">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading user_name">{{ comments.user }} <small> {{ comments.datetime}}</small></h4>
+        <p>{{ comments.content}}</p>
+        <a href="#" class="btn btn-primary btn-sm">Reply</a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

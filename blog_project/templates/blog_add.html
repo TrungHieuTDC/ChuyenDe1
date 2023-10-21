@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>Add new blog</h1>
+    <form action="/blog_add/" enctype="multipart/form-data" method="POST"> 
+        {% csrf_token %}
+        <div class="container mt-4">
+            <h6>Title</h6>
+            {{ form.title }}
+            <br>
+            <h6>Content</h6>
+            {{ form.content|safe }}
+            <br>
+            <h6>Image</h6>
+            {{ form.image }}
+            <br>
+            <br>
+            <button class="btn btn-primary">Add Blog</button>
+        </div>
+    </form>
+    <script>
+        {% if alert %}
+        alert('Your Blog is added successfully.');
+        document.location = '/draft/';
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block js %}
+    {{ form.media }}
+{% endblock %}

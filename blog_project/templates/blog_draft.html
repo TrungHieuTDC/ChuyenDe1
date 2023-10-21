@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="blog-box row">
+    {% if posts %}
+    {% for post in posts %}
+    <div class="col-md-4 mb-4" >
+        <div class="post-media">
+            <a href="{% url 'blog:blog_detail' post.slug %}" title="{{ post.title }}">
+                <img src="/media/{{ post.image }}" alt="" width="300" height="300">
+                <div class="hovereffect"></div>
+            </a>
+        </div><!-- end media -->
+    </div><!-- end col -->
+    <div class="big-meta col-md-8">
+        <div class="blog-meta">
+            <span class="bg-aqua "><a href="garden-category.html" title="">Indoor</a></span>
+            <h4><a href="{% url 'blog:blog_detail' post.slug %}" title="{{ post.title }}" formmethod="POST">{{ post.title }}</a></h4>
+            <p>{% autoescape off %}
+                {{ post.content|truncatechars_html:200|linebreaksbr }}
+            {% endautoescape %}</p>
+            <small><a href="garden-category.html" title="views"><i class="fa fa-eye"></i> {{ post.views}}</a></small>
+            <small><a href="garden-category.html" title="loved"><i class="fa fa-heart"></i> {{ post.love.count}}</a></small>
+            <small><a href="garden-category.html" title="comment"><i class="fa fa-comment"></i> {{ post.comment_count}}</a></small>
+            <br>
+            <small><a href="/user_posts/{{ post.user.id }}" title="">by {{post.user}}</a></small>
+            <small><a href="" title="">{{ post.datetime|date:'Y-m-d' }}</a></small>
+        </div>
+        <br>
+        <small>{% if user.is_superuser %}<a href="/blog_delete/{{post.slug}}/" class="btn btn-danger ">Delete Blog</a>{% endif %}</small>
+        <small>{% if user.is_superuser %}<a href="{% url 'blog:blog_edit' post.slug %}" class="btn btn-danger">Update Blog</a>{% endif %}</small>
+        {% if user.is_superuser %}<a href="{% url 'blog:publish' post.slug %}" onclick="showSuccessAlert()" class="btn btn-danger">Publish Blog</a>{% endif %}
+    </div><!-- end meta -->
+    <hr class="invis">
+    {% endfor %}
+    {% else %}
+    <h1>No draft post this time </h2>
+    {% endif %}
+</div><!-- end blog-box -->
+<script>
+    function showSuccessAlert() {
+        alert("Your Blog is publish successfully !");
+    }
+  </script>
+{% endblock %}

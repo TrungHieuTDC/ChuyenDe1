@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+<form method="POST" action="{% url 'edit_comment' comment.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Lưu chỉnh sửa</button>
+  </form>

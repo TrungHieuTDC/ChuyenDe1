@@ -1,0 +1,562 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Site Metas -->
+    <title>Forest Time - Stylish Magazine Blog Template</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+    
+    <!-- Design fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet"> 
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+    <!-- FontAwesome Icons core CSS -->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+    <!-- Responsive styles for this template -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+
+    <!-- Colors for this template -->
+    <link href="{% static 'css/colors.css' %}" rel="stylesheet">
+
+    <!-- Version Garden CSS for this template -->
+    <link href="{% static 'css/version/garden.css' %}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .love-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .love-button img {
+            width: 50px;
+            height: 50px;
+            /* Thêm các thuộc tính CSS khác tùy chỉnh kiểu dáng của hình ảnh */
+        }
+        .image-container {
+            position: relative;
+            display: inline-block;
+          }
+          
+          .love-count {
+            position: absolute;
+            top: 32%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+          }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <div class="collapse top-search" id="collapseExample">
+            <div class="card card-block">
+                <div class="newsletter-widget text-center">
+                    <form class="form-inline">
+                        <input type="text" class="form-control" placeholder="What you are looking for?">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    </form>
+                </div><!-- end newsletter -->
+            </div>
+        </div><!-- end top-search -->
+
+        <div class="topbar-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 hidden-xs-down">
+                        <div class="topsocial">
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Youtube"><i class="fa fa-youtube"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Flickr"><i class="fa fa-flickr"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus"></i></a>
+                        </div><!-- end social -->
+                    </div><!-- end col -->
+
+                    <div class="col-lg-4 hidden-md-down">
+                    </div><!-- end col -->
+
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="topsearch text-right">
+                            {% if user.is_authenticated %}
+                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="display: inline-block;"><i class="fa fa-search"></i> Search</a>  
+                            {% if user.is_superuser %}
+                            <a class="nav-link active" href="/blog_add/" style="display: inline-block;">Add blog</a>
+                            <a class="nav-link active" href="/draft/" style="display: inline-block;">Draft blog</a>
+                            {% endif %}
+                            <a class="nav-link active" href="/user_posts/{{ user.id }}" style="display: inline-block;">Hello {{ user }}</a>
+                            <a class="nav-link" href="/logout/" style="display: inline-block;">Logout</a>
+                        {% else %} 
+                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="display: inline-block;"><i class="fa fa-search"></i> Search</a>
+                            <a class="nav-link active" href="{% url 'blog:register' %}" style="display: inline-block;">Register</a>
+                            <a class="nav-link" href="/login/" style="display: inline-block;">Login</a>
+                        {% endif %}
+                            
+                        </div><!-- end search -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end header-logo -->
+        </div><!-- end topbar -->
+
+        <div class="header-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="logo">
+                            <a href="/"><img src="{% static 'images/version/garden-logo.png' %}" alt=""></a>
+                        </div><!-- end logo -->
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end header-logo -->
+        </div><!-- end header -->
+
+        <header class="header">
+            <div class="container">
+                <nav class="navbar navbar-inverse navbar-toggleable-md">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Forest Timemenu" aria-controls="Forest Timemenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-md-center" id="Forest Timemenu">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link color-green-hover" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link color-green-hover" href="{% url 'blog:most_view_post' %}">Most View</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link color-green-hover" href="{% url 'blog:most_loved_post' %}">Most Loved</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link color-green-hover" href="{% url 'blog:most_comment_post' %}">Most Comment</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div><!-- end container -->
+        </header><!-- end header -->
+
+        <div class="page-title wb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <h2><i class="fa fa-leaf bg-green"></i> Blog</h2>
+                    </div><!-- end col -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Blog</li>
+                        </ol>
+                    </div><!-- end col -->                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end page-title -->
+
+        <section class="section wb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-title-area">
+                                <span class="color-green"><a href="garden-category.html" title="">Gardening</a></span>
+                                <h3>{{post.title}}</h3>
+                                <div class="blog-meta big-meta">
+                                    <small><a href="#" title="">{{ post.datetime }}</a></small>
+                                    <small><a href="/user_posts/{{ post.user.id }}" title="">by {{ post.user }}</a></small>
+                                    <small><a href="#" title=""><i class="fa fa-eye"></i> {{ post.views}}</a></small>
+                                </div><!-- end meta -->
+
+                                <div class="post-sharing">
+                                    <ul class="list-inline">
+                                        <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
+                                        <li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
+                                        <li><a href="#" class="gp-button btn btn-primary "><i class="fa fa-google-plus"></i></a></li> 
+                                    </ul>
+                                </div><!-- end post-sharing -->
+                            </div><!-- end title -->
+
+                            <div class="single-post-media">
+                                <img src="/media/{{ post.image }}" alt="" width="800px" height="460px" >
+                            </div><!-- end media -->
+
+                            <div class="blog-content">  
+                                <div class="pp">
+                                    <p>{% autoescape off %}{{ post.content }}{% endautoescape %}</p>
+                                </div><!-- end pp -->
+
+
+                                
+                            <div class="blog-title-area">
+                                <div class="tag-cloud-single">
+                                    <span>Tags</span>
+                                    <small><a href="#" title="">lifestyle</a></small>
+                                    <small><a href="#" title="">colorful</a></small>
+                                    <small><a href="#" title="">trending</a></small>
+                                    <small><a href="#" title="">another tag</a></small>
+                                </div><!-- end meta -->
+
+                                <div class="post-sharing">
+                                    <ul class="list-inline">
+                                        <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
+                                        <li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
+                                        <li><a href="#" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
+                                        {% if request.user.is_authenticated %}
+                                            {% if request.user in post.love.all %}
+                                                <form action="{% url 'blog:love_post' post.slug %}" method="POST" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    
+                                                    <button type="submit" class="love-button float-right">
+                                                        <span class="">Love </span>
+                                                        <div class="image-container">
+                                                            <img src="{% static 'images/love.jpg' %}" title="Click to unlove" alt="Unlove">
+                                                            <span class="love-count">{{ post.love.count }}</span>
+                                                        </div>
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                <form action="{% url 'blog:love_post' post.slug %}" method="POST" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="love-button float-right">
+                                                        <span class="font-weight-bold">Love </span>
+                                                        <div class="image-container">
+                                                            <img src="{% static 'images/unlove.jpg' %}" title="Click to love" alt="love">
+                                                            <span class="love-count">{{ post.love.count }}</span>
+                                                        </div>
+                                                    </button>
+                                                </form>
+                                            {% endif %}
+                                        {% endif %}
+                                    </ul>
+                                </div><!-- end post-sharing -->
+                            </div><!-- end title -->
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="banner-spot clearfix">
+                                        <div class="banner-img">
+                                            <img src="upload/banner_01.jpg" alt="" class="img-fluid">
+                                        </div><!-- end banner-img -->
+                                    </div><!-- end banner -->
+                                </div><!-- end col -->
+                            </div><!-- end row -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox authorbox clearfix">
+                                <h4 class="small-title">About author</h4>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                        <img src="{{ post.user.profile.avatar.url }}" alt="" class="img-fluid rounded-circle"> 
+                                    </div><!-- end col -->
+
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                        <h4><a href="/user_posts/{{ post.user.id }}"> {{ post.user }}</a></h4>
+                                        <p>{{post.user.profile.bio }}</p>
+
+                                        <div class="topsocial">
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Youtube"><i class="fa fa-youtube"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Website"><i class="fa fa-link"></i></a>
+                                        </div><!-- end social -->
+
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div>
+                            </div><!-- end author-box -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox clearfix">
+                                <h4 class="small-title">You may also like</h4>
+                                <div class="row">
+                                    {% for post in randoms %}
+                                    <div class="col-lg-6">
+                                        <div class="blog-box">
+                                            <div class="post-media">
+                                                <a href="{% url 'blog:blog_detail' post.slug %}" title="">
+                                                    <img src="/media/{{ post.image }}" alt="" width="364px" height="209px">
+                                                    <div class="hovereffect">
+                                                        <span class=""></span>
+                                                    </div><!-- end hover -->
+                                                </a>
+                                            </div><!-- end media -->
+                                            <div class="blog-meta">
+                                                <h4><a href="{% url 'blog:blog_detail' post.slug %}" title="">{{ post.title }}</a></h4>
+                                                <small><a href="{% url 'blog:blog_detail' post.slug %}" title="">News</a></small>
+                                                <small><a href="{% url 'blog:blog_detail' post.slug %}" title="">{{ post.datetime }}</a></small>
+                                            </div><!-- end meta -->
+                                        </div><!-- end blog-box -->
+                                    </div><!-- end col -->
+                                    {% endfor %}
+                                </div><!-- end row -->
+                            </div><!-- end custom-box -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox clearfix">
+                                <h4 class="small-title">{{ comments.count }} Comment</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="comments-list">  
+                                            {% for comment in comments %}
+                                                <div class="media">
+                                                    <a class="media-left" href="#">
+                                                        <img src="{{ comment.user.profile.avatar.url }}" alt="" class="rounded-circle">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading user_name">{{ comment.user }} <small> {{ comment.datetime }}</small></h4>
+                                                        <p id="comment-content">{{ comment.content}}</p>                                                                                        
+                                                        {% if user.is_authenticated %}
+                                                            <a class="btn btn-primary btn-sm reply-button d-inline-block"  data-comment-id="{{ comment.id }}">Reply</a>
+                                                        {% endif %}
+
+                                                        {% if comment.user == request.user %}                                              
+                                                            <form action="{% url 'blog:delete_comment' comment.id %}" method="POST" class="d-inline-block">
+                                                                {% csrf_token %}
+                                                                <button class="btn btn-primary btn-sm reply-button" onclick="showDeleteAlert()"  type="submit">Xóa</button>
+                                                            </form>
+                                                            {% comment %} <form id="edit-comment-form" method="POST" action="{% url 'blog:edit_comment' comment.id %}">
+                                                                {% csrf_token %}
+                                                                <button type="button" onclick="editComment()">Sửa</button>
+                                                                <input type="submit" style="display: none;" value="Lưu chỉnh sửa">
+                                                            </form> {% endcomment %}
+                                                        {% endif %}  
+                                                        <!-- Form trả lời cho bình luận -->
+                                                        <div class="reply-form" id="reply-form-{{ comment.id }}" style="display: none;">
+                                                            <form method="post" action="{% url 'blog:add_reply' comment.id %}">
+                                                                {% csrf_token %}
+                                                                <input type="text" class="form-control" name="reply_text" placeholder="Viết phản hồi của bạn...">
+                                                                <button type="submit"  class="btn btn-primary btn-sm">Gửi</button>
+                                                            </form> 
+                                                        </div> 
+                                                                 
+                                                        <!-- Vòng lặp để hiển thị các phản hồi của bình luận -->
+                                                        {% for reply in comment.replies.all %}
+                                                            <div class="media">
+                                                                <a class="media-left" href="#">
+                                                                    <img src="{{ reply.user.profile.avatar.url }}" alt="" class="rounded-circle">
+                                                                </a>
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading user_name">{{ reply.user }} <small> {{ reply.datetime }}</small></h4>
+                                                                    <p>{{ reply.text }}</p>
+                                                                </div>
+                                                                {% comment %} {% if comment.user == request.user %}                                              
+                                                                <form action="{% url 'blog:delete_comment' comment.id %}" method="POST" class="d-inline-block">
+                                                                    {% csrf_token %}
+                                                                    <button class="btn btn-primary btn-sm reply-button" onclick="showDeleteAlert()"  type="submit">Xóa</button>
+                                                                </form>
+                                                            {% endif %} {% endcomment %}
+                                                            </div>
+                                                            
+                                                        {% endfor %}
+                                                        
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                                                                         
+                                        </div>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end custom-box -->
+
+                            <hr class="invis1">
+                            {% if user.is_authenticated %}
+                                <div class="custombox clearfix">
+                                    <h4 class="small-title">Leave a Reply</h4>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form action="/blog/{{post.slug}}/" method="POST" class="form-wrapper" >
+                                                {% csrf_token %}
+                                                <h4>User: </h4>
+                                                <h6 class="form-control"><b>{{ user }}</b> </h6>
+                                                <h4>Content : </h4>
+                                                <textarea class="form-control" name="content" id="content" placeholder="Leave a comment here"></textarea>
+                                                <button type="submit" onclick="showSuccessAlert()" class="btn btn-primary">Submit Comment</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                            <h1>You need login for comment</h1>  
+                            <a href="{% url 'blog:login' %}" class="btn btn-primary">Login</a> to post comments below.</a>
+                            {% endif %}
+                        </div><!-- end page-wrapper -->
+                    </div><!-- end col -->
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <h2 class="widget-title">Search</h2>
+                                <form class="form-inline search-form" method="GET" action="{% url 'blog:blog_search' %}">
+                                    <div class="form-group">
+                                        <input type="text" name ="search" class="form-control" placeholder="Search on the site">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div><!-- end widget -->
+
+                            <div class="widget">
+                                <h2 class="widget-title">Recent Posts</h2>
+                                <div class="blog-list-widget">
+                                    <div class="list-group">
+                                        {% for post in random_recent %}        
+                                            <a href="{% url 'blog:blog_detail' post.slug %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                <div class="w-100 justify-content-between">
+                                                    <img src="/media/{{ post.image }}" alt="" class=" float-left" width="50px" height="50px">
+                                                    <h5 class="mb-1">{{post.title|truncatechars:20}}</h5>
+                                                    <small>{{post.datetime}}</small>
+                                                </div>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div><!-- end blog-list -->
+                            </div><!-- end widget -->
+
+                            <div class="widget">
+                                <h2 class="widget-title">Advertising</h2>
+                                <div class="banner-spot clearfix">
+                                    <div class="banner-img">
+                                        <img src="upload/banner_04.jpg" alt="" class="img-fluid">
+                                    </div><!-- end banner-img -->
+                                </div><!-- end banner -->
+                            </div><!-- end widget -->
+
+                            <div class="widget">
+                                <h2 class="widget-title">Instagram Feed</h2>
+                                <div class="instagram-wrapper clearfix">
+                                    <a href="#"><img src="{% static 'upload/garden_sq_02.jpg'}" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_02.jpg" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_03.jpg" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_04.jpg" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_05.jpg" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_06.jpg" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_07.jpg" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_08.jpg" alt="" class="img-fluid"></a>
+                                    <a href="#"><img src="upload/garden_sq_09.jpg" alt="" class="img-fluid"></a>
+                                </div><!-- end Instagram wrapper -->
+                            </div><!-- end widget -->
+
+                            <div class="widget">
+                                <h2 class="widget-title">Popular Categories</h2>
+                                <div class="link-widget">
+                                    
+                                </div><!-- end link-widget -->
+                            </div><!-- end widget -->
+                        </div><!-- end sidebar -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="widget">
+                            <div class="footer-text text-center">
+                                <a href="index.html"><img src="images/version/garden-footer-logo.png" alt="" class="img-fluid"></a>
+                                <p>Forest Time is a personal blog for handcrafted, cameramade photography content, fashion styles from independent creatives around the world.</p>
+                                <div class="social">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>              
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Google Plus"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                                </div>
+
+                                <hr class="invis">
+
+                                <div class="newsletter-widget text-center">
+                                    <form class="form-inline">
+                                        <input type="text" class="form-control" placeholder="Enter your email address">
+                                        <button type="submit" class="btn btn-primary">Subscribe <i class="fa fa-envelope-open-o"></i></button>
+                                    </form>
+                                </div><!-- end newsletter -->
+                            </div><!-- end footer-text -->
+                        </div><!-- end widget -->
+                    </div><!-- end col -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <br>
+                        <br>
+                        <div class="copyright">&copy; Forest Time. Design: <a href="http://html.design">HTML Design</a>.</div>
+                    </div>
+                </div>
+            </div><!-- end container -->
+        </footer><!-- end footer -->
+
+        <div class="dmtop">Scroll to Top</div>
+        
+    </div><!-- end wrapper -->
+
+    <!-- Core JavaScript
+    ================================================== -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/tether.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".reply-button").click(function() {
+                var commentId = $(this).data("comment-id");
+                $("#reply-form-" + commentId).toggle();  // Hiển thị hoặc ẩn form reply
+            });
+        });
+    </script>
+    <script>
+        function showSuccessAlert() {
+            alert("Comment added successfully !");
+        }
+        function showDeleteAlert() {
+            alert("Comment deleted successfully !");
+        }
+    </script>
+    <script>
+        function editComment() {
+            var commentContent = document.getElementById('comment-content');
+            var editButton = document.getElementById('edit-comment-button');
+            var form = document.getElementById('edit-comment-form');
+    
+            commentContent.innerHTML = '<input type="text" name="content" value="{{ comment.content }}">';
+    
+            editButton.style.display = 'none';
+            form.lastElementChild.style.display = 'inline';
+        }
+    </script>
+
+</body>
+</html>

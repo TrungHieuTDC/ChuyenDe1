@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Edit blog</h1>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/4.16.2/standard-all/ckeditor.css">
+        <form enctype="multipart/form-data" method="POST"> 
+            {% csrf_token %}
+            <div class="container mt-4">
+                <h6>Title</h6>
+                <p>{{ form.title }}</p>
+                <h6>Content</h6>
+                {{ form.content|safe }}
+                <h6>Image</h6>
+                <p>{{ form.image }}</p>
+                <button class="btn btn-primary" onclick="showSuccessAlert()">Update Blog</button>
+            </div>
+        </form>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard-all/ckeditor.js"></script>
+    <script>
+        // Kích hoạt CKEditor cho trường 'content'
+        CKEDITOR.replace('id_content');
+    </script>
+        <script>
+            function showSuccessAlert() {
+                alert("Your Blog is edited successfully !");
+            }
+        </script>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

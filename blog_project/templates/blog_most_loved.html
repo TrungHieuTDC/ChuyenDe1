@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>Most Loved</h2>
+<div class="blog-box row">
+    {% for post in page_obj  %}
+    <div class="col-md-4 mb-4" >
+        <div class="post-media">
+            <a href="{% url 'blog:blog_detail' post.slug %}" title="{{ post.title }}">
+                <img src="/media/{{ post.image }}" alt="" width="300" height="310">
+                <div class="hovereffect"></div>
+            </a>
+        </div><!-- end media -->
+    </div><!-- end col -->
+    <div class="big-meta col-md-8">
+        <div class="blog-meta">
+            <span class="bg-aqua "><a href="garden-category.html" title="">Indoor</a></span>
+            <h4><a href="{% url 'blog:blog_detail' post.slug %}" title="{{ post.title }}" formmethod="POST">{{ post.title }}</a></h4>
+            <p>{% autoescape off %}
+                {{ post.content|truncatechars_html:200|linebreaksbr }}
+            {% endautoescape %}</p>
+            <small><a href="garden-category.html" title="views"><i class="fa fa-eye"></i> {{ post.views}}</a></small>
+            <small><a href="garden-category.html" title="loved"><i class="fa fa-heart"></i> {{ post.love.count}}</a></small>
+            <small><a href="garden-category.html" title="comment"><i class="fa fa-comment"></i> {{ post.total_comments}}</a></small>
+            <br>
+            <small><a href="/user_posts/{{ post.user.id }}" title="">by {{post.user}}</a></small>
+            <small><a href="" title="">{{ post.datetime|date:'Y-m-d' }}</a></small>
+        </div>
+        <br>
+        <small>{% if user.is_superuser %}<a href="blog_delete/{{post.slug}}/" class="btn btn-danger ">Delete Blog</a>{% endif %}</small>
+        <small>{% if user.is_superuser %}<a href="{% url 'blog:blog_edit' post.slug %}" class="btn btn-danger">Update Blog</a>{% endif %}</small>
+    </div><!-- end meta -->
+    <hr class="invis">
+    {% endfor %}
+</div><!-- end blog-box -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-start">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}
+{% block recent_posts %}
+    {% for post in random %}        
+        <a href="{% url 'blog:blog_detail' post.slug %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="w-100 justify-content-between">
+                <img src="/media/{{ post.image }}" alt="" class=" float-left" width="50px" height="50px">
+                <h5 class="mb-1">{{post.title|truncatechars:20}}</h5>
+                <small>{{post.datetime}}</small>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

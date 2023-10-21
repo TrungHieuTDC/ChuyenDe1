@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <!-- Site Metas -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style-profile.css' %}" rel="stylesheet">
+    <!-- Liên kết CSS của Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- Liên kết CSS của Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body {
+            background: #74a044;
+        }
+        
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #74a044;
+        }
+        
+        .profile-button {
+            background: #74a044;
+            box-shadow: none;
+            border: none;
+        }
+        
+        .profile-button:hover {
+            background: #682773;
+        }
+        
+        .profile-button:focus {
+            background: #682773;
+            box-shadow: none;
+        }
+        
+        .profile-button:active {
+            background: #682773;
+            box-shadow: none;
+        }
+        
+        .back:hover {
+            color: #682773;
+            cursor: pointer;
+        }
+        
+        .labels {
+            font-size: 11px;
+        }
+        
+        .add-experience:hover {
+            background: #BA68C8;
+            color: #fff;
+            cursor: pointer;
+            border: solid 1px #BA68C8;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" src="{{ user.profile.avatar.url }}" width="90px" height= "90px">
+                    <span class="font-weight-bold">{{ user.username }}</span>
+                    <span class="text-black-50">{{ user.email }}</span>
+                    <span>Việt Nam</span></div>
+                   
+            </div>
+            <div class="col-md-5 border-right">
+                {% if user == request.user %}
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-right"><a href="/">Trang chủ</a> / <span>Edit profile</span></h6>
+                    </div>
+                    <form method="POST" action="{% url 'blog:save_profile' %}" enctype="multipart/form-data">
+                    {% csrf_token %}  
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value="{{ user.username }}" readonly></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Password</label><input type="password"  name="password" class="form-control" placeholder="password" value="{{ user.password }}" readonly></div>
+                        <div class="col-md-6"><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="first name" value="{{ user.email }}"></div>
+                        <div class="col-md-12 " >
+                            <label class="labels " >Gender</label>
+                            <br>
+                            <div class="form-check form-check-inline">
+                                {% if user.profile.gender == 'male' %}
+                                <input type="radio" class="form-check-input" name="gender" value="male" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="gender" value="male">
+                                {% endif %}
+                                <label class="form-check-label">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {% if user.profile.gender == 'female' %}
+                                <input type="radio" class="form-check-input" name="gender" value="female" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="gender" value="female">
+                                {% endif %}
+                                <label class="form-check-label">Female</label>
+                            </div>
+                        </div> 
+                        <div class="col-md-12">
+                            <label class="labels">Day of birth: mm/dd/yyyy</label>
+                            <input type="date" class="form-control" name="birthdate" id="birthdate" value="{{ user.profile.birthdate|date:'Y-m-d' }}">
+                        </div>  
+                        <div class="col-md-12">
+                            <label class="labels">Bio</label>
+                            <textarea class="form-control"  name="bio" placeholder="Edit about you">{{ user.profile.bio }}</textarea>
+                        </div>   
+                        <div class="col-md-12">
+                            <label class="labels" for="avatar">Avatar</label>
+                            <input type="file" class="form-control" name="avatar" id="avatar" >
+                        </div>                     
+                    </div>
+                    <div class="mt-5 text-center">
+                    <button class="btn btn-primary profile-button" onclick="showSuccessAlert()" type="submit">Save Profile</button></div>
+                    </form>
+                </div>
+                {% else %}
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-right"><a href="/">Trang chủ</a> / <span>Profile</span></h6>
+                    </div>
+                    <form method="POST" action="{% url 'blog:save_profile' %}" enctype="multipart/form-data">
+                    {% csrf_token %}  
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Name</label>
+                            <p class="form-control" >{{ user.username }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Email</label>
+                            <p class="form-control" >{{ user.email }}</p>
+                        </div>
+                        <div class="col-md-12 " >
+                            <label class="labels " >Gender</label>
+                            <br>
+                            <div class="form-check form-check-inline">
+                                {% if user.profile.gender == 'male' %}
+                                <input type="radio" class="form-check-input" name="gender" value="male" checked disabled >
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="gender" value="male" disabled >
+                                {% endif %}
+                                <label class="form-check-label" readonly>Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {% if user.profile.gender == 'female' %}
+                                <input type="radio" class="form-check-input" name="gender" value="female" checked disabled >
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="gender" value="female" disabled >
+                                {% endif %}
+                                <label class="form-check-label">Female</label>
+                            </div>
+                        </div> 
+                        <div class="col-md-12">
+                            <label class="labels">Day of birth: mm/dd/yyyy</label>
+                            <p class="form-control" >{{ user.profile.birthdate|date:'d-m-Y' }}</p>
+                        </div>  
+                        <div class="col-md-12">
+                            <label class="labels">Bio</label>
+                            <p class="form-control" >{{ user.profile.bio }}</p>
+                        </div>                     
+                    </div>
+                    <div class="mt-5 text-center">   
+                    </form>
+                </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><h1>{{ user.username }}'s Posts</h1><span class="border px-3 p-1 add-experience"></div>
+                    {% if page_obj %}
+                    {% for post in page_obj  %}
+                    <div class="d-flex flex-row mt-3 exp-container"><img src="/media/{{ post.image }}" width="45" height="45">
+                        <div class="work-experience ml-1"><a href="{% url 'blog:blog_detail' post.slug %}" title="{{ post.title }}">{{ post.title }}</a>
+                            <span class="d-block text-black-50 labels">{{post.datetime}}</span></div>
+                    </div>
+                    <hr> 
+                    {% endfor %}
+                    <!-- Hiển thị các liên kết phân trang -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-start">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                </li>
+                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% else %}
+                        <p>No post</p>
+                    {% endif %}
+                    {% if user == request.user %}
+                    <h1>Loved Posts</h1>
+                    {% for post in page_objj %}
+                        <div class="d-flex flex-row mt-3 exp-container"><img src="/media/{{ post.image }}" width="45" height="45">
+                            <div class="work-experience ml-1"><a href="{% url 'blog:blog_detail' post.slug %}" title="{{ post.title }}">{{ post.title }}</a>
+                                <span class="d-block text-black-50 labels">{{post.datetime}}</span></div>
+                        </div>
+                        {% empty %}
+                            <p>Không có bài viết nào đã được love.</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core JavaScript
+    ================================================== -->
+    <!-- Liên kết jQuery -->
+    <script>
+        function showSuccessAlert() {
+            alert("Your Blog is edited successfully !");
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Liên kết JavaScript của Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

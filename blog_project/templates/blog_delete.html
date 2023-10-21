@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} <h1>Delete Blog Post </h1> {% endblock %}
+
+{% block css %}
+{% endblock %}
+{% block body %}    
+<form enctype="multipart/form-data" method="POST"> {% csrf_token %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Are you sure you want to delete this blog?</h5>
+          <form action="/blog_delete/{{posts.slug}}/" method="POST">				
+            {% csrf_token %}    
+          <button class="btn btn-danger" onclick="showSuccessAlert()">Delete Blog</button>
+          <a href="/" class="btn btn-success">Cancel</a>
+        </div>
+      </div>
+</div>
+</form>
+<script>
+  function showSuccessAlert() {
+      alert("Your Blog is deleted successfully !");
+  }
+</script>
+{% endblock %}
